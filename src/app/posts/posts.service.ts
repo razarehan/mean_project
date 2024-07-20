@@ -28,7 +28,7 @@ export class PostsService {
         return postData.posts.map((post:any) => {
           return {
             title: post.title,
-            content: post.content,
+            content: post.content.replace(/\n/g, "<br />"),
             id: post._id,
             creator: post.creator
           }

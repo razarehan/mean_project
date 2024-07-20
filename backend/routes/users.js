@@ -25,38 +25,33 @@ router.post("/singup", (req, res, next) => {
     })
 })
 
-router.post("/login", (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   let fetchUser;
-  User.findOne({email: req.body.email})
-    .then(user => {
-      if(!user) {
-        return res.status(401).json ({
-          message: 'Invalid authentication credentials!'
-        });
-      }
-      fetchUser = user;
-      return bcrypt.compare(req.body.password, user.password);
-    })
-    .then(result => {
-      if(!result) {
-        return res.status(401).json ({
-          message: 'Invalid authentication credentials!'
-        });
-      }
-      const token = jwt.sign({email: fetchUser.email, userId: fetchUser._id}, process.env.JWT_KEY,
-        {expiresIn: '1h'});
-
-      res.status(200).json({
-        token: token,
-        expiresIn: 3600,
-        userId: fetchUser._id
-      })
-    })
-    .catch(err => {
-      return res.status(401).json ({
-        message: 'Invalid authentication credentials!'
-      });
+  fetchUser = await User.findOne({email: req.body.email});
+  if(!fetchUser) {
+    return res.status(401).json ({
+      message: 'Invalid authentication credentials!'
     });
+  }
+  let isPasswordMatched;
+  try {
+    isPasswordMatched = await bcrypt.compare(req.body.password, fetchUser.password);
+  } catch(err) {
+    console.log("password not matched!!!");
+  }
+  if(!isPasswordMatched) {
+    return res.status(401).json ({
+      message: 'Invalid authentication credentials!'
+    });
+  }
+  const ss_key = "";
+  const token = jwt.sign({email: fetchUser.email, userId: fetchUser._id }, ss_key, { expiresIn: '1h' });
+
+  return res.status(200).json({
+    token: token,
+    expiresIn: 3600,
+    userId: fetchUser._id
+  });
 })
 
 module.exports = router;

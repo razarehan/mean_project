@@ -6,13 +6,13 @@ const postsRoutes = require('./routes/posts');
 const usersRoutes = require('./routes/users');
 
 const app = express();
-mongoose.connect("mongodb+srv://rzzza:" + process.env.MONGO_ATLAS_PW + "@cluster0.pyyeazx.mongodb.net/test?retryWrites=true&w=majority")
-  .then(() => {
-    console.log('connected to db');
-  })
-  .catch(() => {
-    console.log('Connection fail');
-  })
+mongoose.connect("mongodb+srv://rzzza_123:" + "" + "@cluster0.l1empog.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+.then(() => {
+  console.log('connected to db');
+})
+.catch(() => {
+  console.log('Connection fail');
+})
 
 app.use(bodyParser.json() );
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -5,7 +5,7 @@
 // "http://localhost:3000/api"
 export const environment = {
   production: false,
-  apiUrl: "http://meanstack-env.eba-p6h5s9qi.ap-south-1.elasticbeanstalk.com/api"
+  apiUrl: "http://127.0.0.1:3000/api"
 };
 
 /*
