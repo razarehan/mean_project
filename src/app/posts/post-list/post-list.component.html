@@ -1,6 +1,6 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
-
-<mat-accordion *ngIf="posts.length > 0 && !isLoading">
+<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No Post Found!</p> 
+<!-- <mat-accordion *ngIf="posts.length > 0 && !isLoading">
   <mat-expansion-panel *ngFor="let post of posts">
     <mat-expansion-panel-header>{{post.title}}</mat-expansion-panel-header>
     <p [innerHTML]="post.content"></p>
@@ -9,6 +9,27 @@
       <button mat-button color="warn" (click)="onDeletePost(post.id)">Delete</button>
     </mat-action-row>
   </mat-expansion-panel>
-</mat-accordion>
-<mat-paginator [length]="totalPosts" [pageSize]="postsPerPage"></mat-paginator>
-<p class="info-text mat-body-1" *ngIf="posts.length <= 0 && !isLoading">No Post Found!</p>
+</mat-accordion> -->
+<!-- <mat-paginator [length]="totalPosts" [pageSize]="postsPerPage"></mat-paginator> -->
+<div *ngIf="posts.length > 0 && !isLoading">
+  <mat-card *ngFor="let post of posts">
+    <div style="border-radius: 8px;" (click)="viewPost(post.id)"> <!--blog image-->
+      <img class="blog-image" mat-card-image src="https://www.goldentipstea.in/cdn/shop/articles/7-Health-Benefits-of-darjeeling-tea_1024x.png?v=1720770369" alt="Photo of a blog">
+    </div>
+    <div class="details-container"> <!-- details section-->
+      <mat-card-header>
+        <div mat-card-avatar class="profile-img">
+          <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="profile_pic">
+        </div>
+        <mat-card-title>7 Health Benefits of Darjeeling Tea</mat-card-title>
+        <mat-card-subtitle>Written by : Rehan Raza</mat-card-subtitle>
+      </mat-card-header>
+      <!-- *ngIf="isLoggedIn && userId === post.creator" -->
+      <mat-action-row>
+        <p class="m-0 published">Published :<br class="break"/> 21 Jul 2024</p>
+        <a mat-button [routerLink]="['/edit', post.id]" color="accent">Edit</a>
+        <button mat-button color="warn" (click)="onDeletePost(post.id)">Delete</button>
+      </mat-action-row>
+    </div>
+  </mat-card>
+</div>

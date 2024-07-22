@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/auth.service';
+import { SideNavService } from './side-nav/side-nav.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,9 +9,15 @@ import { AuthService } from './auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private authService: AuthService) { }
+  isSideNavVisiable = false;
+  constructor(private authService: AuthService, private navService: SideNavService) { }
 
   ngOnInit(): void {
-    this.authService.autoAuthUser();  
+    this.authService.autoAuthUser();
+    this.navService.hasOpenSideNav.subscribe((data) => {
+      console.log("REHAN", data);
+      
+      this.isSideNavVisiable = data;
+    })
   }
 }

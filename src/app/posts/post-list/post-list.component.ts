@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
@@ -27,7 +28,9 @@ export class PostListComponent implements OnInit, OnDestroy {
   private postsSubscription = new Subscription();
   private authStatusSub = new Subscription();
 
-  constructor(private postsService: PostsService, private authService: AuthService) { }
+  constructor(private postsService: PostsService, 
+              private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -55,5 +58,14 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   onDeletePost(id: string) {
     this.postsService.deletePost(id);
+  }
+
+  viewPost(id: string) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        id: id
+      }
+    };
+    this.router.navigate(['/view', id], navigationExtras);
   }
 }
