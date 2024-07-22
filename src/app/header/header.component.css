@@ -1,3 +1,8 @@
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+}
 ul {
   list-style: none;
   margin: 0;
@@ -13,4 +18,15 @@ a {
 .spacer {
   flex: 1 1 0;
 }
-
+.toggle-btn {
+  display: none;
+}
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  .header-list {
+    display: none;
+  }
+  .toggle-btn {
+    display: block;
+  }
+}

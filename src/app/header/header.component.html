@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
-  <span routerLink="/">My Messages</span>
+  <span routerLink="/">All Blogs</span>
   <span class="spacer"></span>
-  <ul>
+  <ul class="header-list">
     <li *ngIf="isLoggedIn">
       <a mat-button routerLink="/create" routerLinkActive="mat-accent">New Post</a>
     </li>
@@ -15,4 +15,7 @@
       <button type="button" (click)="onLogout()" mat-button>Logout</button>
     </li>
   </ul>
+  <button class="toggle-btn" type="button" mat-button (click)="openSideNav()">
+    <img src="assets/menu-outline.svg" alt="">
+  </button>
 </mat-toolbar>

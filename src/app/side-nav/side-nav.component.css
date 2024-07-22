@@ -1,0 +1,41 @@
+:host {
+    height: calc(100% - 56px);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0px;
+    /* transform: translate(0%, 0); */
+    z-index: 99;
+    background: #3f51b5;
+    animation-name: sliding;
+    animation-duration: 0.6s;
+    animation-delay: 0.6s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes sliding {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 55%;
+    }
+}
+
+ul {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+button {
+    color: #f44336;
+    font-size: 16px;
+}

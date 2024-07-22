@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { SideNavService } from '../side-nav/side-nav.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,11 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit, OnDestroy {
   private authStatusListnerSubs: Subscription | undefined;
   isLoggedIn = false;
-  constructor(private authService: AuthService) { }
+
+  showFiller = false;
+  
+  constructor(private authService: AuthService,
+              private navService: SideNavService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.getIsAuth();
@@ -28,4 +33,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
+  openSideNav() {
+    if(!this.navService.isNavOpen()) {
+      this.navService.hasOpenSideNav.next(true);
+      setTimeout(() => {
+        this.navService.setNavOpen(true);
+      }, 500);
+    } else {
+      this.navService.hasOpenSideNav.next(false);
+      this.navService.setNavOpen(false);
+    }
+
+  }
 }

@@ -16,7 +16,8 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorMessageComponent } from './error-message/error-message.component';
 import { AngularMaterialModule } from './angular-material.module';
-
+import { SideNavComponent } from './side-nav/side-nav.component';
+import { PostViewComponent } from './posts/post-view/post-view.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,9 @@ import { AngularMaterialModule } from './angular-material.module';
     PostListComponent,
     LoginComponent,
     SignupComponent,
-    ErrorMessageComponent
+    ErrorMessageComponent,
+    SideNavComponent,
+    PostViewComponent
   ],
   imports: [
     BrowserModule,
