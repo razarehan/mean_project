@@ -1,7 +1,10 @@
 :host {
   display: block;
-  margin: 1rem 0 0;
+  height: 100%;
+  padding: 1rem 0 0;
   padding-bottom: 1rem;
+  background-color: #000000;
+  background-image: linear-gradient(147deg, #000000 0%, #434343 74%);
 }
 .info-text {
   text-align: center;
@@ -13,6 +16,7 @@ mat-card {
   gap: 1rem;
   max-width: 850px;
   margin: 0 auto 1rem;
+  border-radius: 16px;
   
   img.blog-image {
     border-radius: 8px;

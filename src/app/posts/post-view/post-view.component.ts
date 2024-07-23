@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators'
 export class PostViewComponent implements OnInit {
   postId!: string; 
   post!: Post;
-  
+  isLoading = true;
   constructor(private route: ActivatedRoute,
               private postsService: PostsService) { }
 
@@ -37,6 +37,10 @@ export class PostViewComponent implements OnInit {
       }))
       .subscribe((transformedData) => {
         this.post = transformedData;
+        this.isLoading = false;
       })
+  }
+  goBack() {
+    window.history.back();
   }
 }

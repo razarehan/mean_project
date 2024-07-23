@@ -1,6 +1,6 @@
 main {
   width: 80%;
-  margin: 1rem auto;
+  height: calc(100% - 56px);
 }
 
 /* Media query for mobile devices */

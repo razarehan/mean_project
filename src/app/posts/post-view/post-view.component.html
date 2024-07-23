@@ -1,5 +1,37 @@
-<h1>{{post.title}}</h1>
+<!-- <h1>{{post?.title}}</h1>
 
-<p>{{post.content}}</p>
+<p>{{post?.content}}</p>
 
-<span>{{post.creator}}</span>
+<span>{{post?.creator}}</span> -->
+<div class="view-post">
+    <div #ImgContainer class="image-container">
+        <img class="back-btn" (click)="goBack()" src="/assets/arrow-back-outline.svg" alt="">
+        <div class="back-container">
+        </div>
+        <img class="blog-img" src="https://www.goldentipstea.in/cdn/shop/articles/7-Health-Benefits-of-darjeeling-tea_1024x.png?v=1720770369"
+            alt="">
+        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/800px-Image_not_available.png?20210219185637" alt=""> -->
+        <div class="title">
+            <h3>7 Health Benefits of Darjeeling Tea</h3>
+            <p>Written by: Rehan Raza</p>
+        </div>
+    </div>
+    <div class="content">
+        <p *ngFor="let item of [1,2,3,4]">
+            1. Provides Essential Antioxidants
+            Darjeeling tea is abundant in antioxidants such as thearubigins and theaflavins. Together, these complex
+            compounds combat free radicals, neutralize harmful chemicals during digestion, and eliminate toxins.
+            Deficiency in these antioxidants accelerates cellular damage, raises the risk of chronic illnesses, and
+            speeds up the process of aging. Drinking Darjeeling tea bridges the deficit in antioxidants.
+
+            2. Reduces the Risk of Cancer
+            Darjeeling tea contains polyphenolic compounds that inhibit the growth of cancer in several ways and stop
+            tumor development. Darjeeling tea also has anti-mutagenic properties that reduce the frequency of cellular
+            mutations. You can find a more detailed study here
+
+            3. Ensures Adequate Hydration
+            When it comes to combating dehydration, dietician, doctors, and nutritionists recommend drinking at least
+            eight glasses of water a day. Adding a cup of Darjeeling can contribute to your total levels of hydration.
+        </p>
+    </div>
+</div>
