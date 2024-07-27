@@ -33,6 +33,9 @@ export class PostCreateComponent implements OnInit, OnDestroy {
       title: new FormControl(null, {
           validators: [Validators.required, Validators.minLength(3)]
         },),
+      imgUrl: new FormControl(null, {
+        validators: [Validators.minLength(5)]
+      },),
       content: new FormControl(null, {
           validators: [Validators.required, Validators.minLength(6)]
         })
@@ -45,14 +48,12 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.editedPostId = paramMap.get('postId');
         this.postsService.getPost(this.editedPostId).subscribe(postData => {
           // spinner stop 
-          setTimeout(() => {
-            this.isLoading = false;
-            this.post = { id: postData.post._id, title: postData.post.title, content: postData.post.content };
-            this.form.setValue({
-              title: this.post.title,
-              content: this.post.content
-            })
-          }, 1000);
+        this.isLoading = false;
+        this.post = { id: postData.post._id, title: postData.post.title, imgUrl: postData.post.imgUrl, content: postData.post.content };
+        this.form.setValue({
+          title: this.post.title,
+          content: this.post.content
+        })
         }) 
       }
       else {
@@ -68,10 +69,10 @@ export class PostCreateComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     if(this.isCreateMode) {
       const post: Post = this.form.value;
-      this.postsService.addPosts({id: '', title: post.title, content: post.content, creator:this.userId});
+      this.postsService.addPosts({id: '', title: post.title, imgUrl: post.imgUrl, content: post.content, creator:this.userId});
     }
     else {
-      this.postsService.updatePost(this.post.id, this.form.value.title, this.form.value.content, this.userId);
+      this.postsService.updatePost(this.post.id, this.form.value.title, this.form.value.imgUrl, this.form.value.content, this.userId);
     }
     this.form.reset();
   }

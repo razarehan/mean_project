@@ -29,6 +29,11 @@ export class AuthService {
   getUserId() {
     return this.userId;
   }
+  
+  getUserameById(id:string) {
+    return this.http.get<{name:string}>(BACKEND_URL +'/'+ id);
+  }
+
   getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
@@ -55,11 +60,10 @@ export class AuthService {
     }, duration * 1000);
   }
 
-  createUser(email: string, password: string) {
-    const authData: AuthData = {email, password};
+  createUser(email: string, name: string, password: string) {
+    const authData: {email: string, name: string, password: string} = {email, name, password};
     this.http.post<{ message: string, user:any }>(BACKEND_URL + '/singup', authData)
     .subscribe((result) => {
-      console.log(result);
       this.router.navigate(['/']);
     }, (err) => {
       this.authStatusListener.next(false);
@@ -67,7 +71,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    const authData: AuthData = {email, password};
+    const authData: {email:string, password:string} = {email, password};
     this.http.post<{token: string, expiresIn: number, userId: string}>(BACKEND_URL + '/login', authData)
     .subscribe((result) => {
       this.token = result.token;
@@ -82,7 +86,6 @@ export class AuthService {
         this.saveAuthData(this.token, expirationDate, this.userId);
         this.router.navigate(['/']);
       }
-      console.log(result);
     }, (err)=> {
       this.authStatusListener.next(false);
     })

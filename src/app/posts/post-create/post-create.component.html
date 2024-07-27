@@ -10,6 +10,13 @@
         <mat-error *ngIf="form.get('title')?.invalid">Pls enter a post title</mat-error>
     </mat-form-field>
     <mat-form-field>
+      <input 
+        matInput
+        type="text"
+        [formControlName]="'imgUrl'"
+        placeholder="Image URL"/>
+    </mat-form-field>
+    <mat-form-field>
       <textarea 
         matInput rows="4" 
         [formControlName]="'content'"

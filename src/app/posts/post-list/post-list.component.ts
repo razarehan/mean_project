@@ -12,19 +12,14 @@ import { PostsService } from '../posts.service';
   styleUrls: ['./post-list.component.css']
 })
 export class PostListComponent implements OnInit, OnDestroy {
-  // posts = [
-  //   {title: 'first post', content: 'this is my first post'},
-  //   {title: 'second post', content: 'this is my second post'},
-  //   {title: 'third post', content: 'this is my third post'},
-  //   {title: 'fourth post', content: 'this is my fourth post'},
-  //   {title: 'fifth post', content: 'this is my fifth post'},
-  // ]
   isLoading = false;
   totalPosts = 10;
   postsPerPage = 3;
   posts: Post[] = [];
   isLoggedIn = false;
   userId:string | undefined;
+  creatorMap = new Map();
+
   private postsSubscription = new Subscription();
   private authStatusSub = new Subscription();
 
@@ -36,20 +31,27 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.userId = this.authService.getUserId();
     this.postsService.getPosts();
-    this.postsSubscription = this.postsService.postsSubs.subscribe(
-      (posts:Post[]) => {
-        this.isLoading = false;
-        this.posts = posts;
-      }
-    )
+    this.postsSubscription = this.postsService.postsSubs
+    .subscribe((posts:Post[]) => {
+      this.isLoading = false;
+      this.posts = posts;
+      // fetch creator list
+      this.posts.forEach(post => {
+        this.authService.getUserameById(post.creator)
+          .subscribe((res) => {
+            if(!res.name) {
+              res.name = "Anonymous"
+            }
+            this.creatorMap.set(post.creator, res.name);
+          })
+      })
+    })
     this.isLoggedIn = this.authService.getIsAuth();
-    console.log('Simple--->'+ this.isLoggedIn);
     
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe(isAuthenticate => {
       this.isLoggedIn = isAuthenticate;
       this.userId = this.authService.getUserId();
-      console.log('Observable--->'+ this.isLoggedIn);
-    })
+    });
   }
   ngOnDestroy(): void {
     this.postsSubscription .unsubscribe();
@@ -60,10 +62,11 @@ export class PostListComponent implements OnInit, OnDestroy {
     this.postsService.deletePost(id);
   }
 
-  viewPost(id: string) {
+  viewPost(id: string, creator: string) {
     let navigationExtras: NavigationExtras = {
       state: {
-        id: id
+        id: id,
+        creator: creator
       }
     };
     this.router.navigate(['/view', id], navigationExtras);

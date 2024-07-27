@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators'
 import { environment } from 'src/environments/environment';
 
 import { Post } from './post.model';
+import { AuthService } from '../auth/auth.service';
 
 const BACKEND_URL = environment.apiUrl + "/posts/";
 
@@ -16,8 +17,9 @@ export class PostsService {
   private posts: Post[] = [];
   postsSubs = new Subject<Post[]>();
 
-
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient, 
+              private router: Router,
+              private authService: AuthService) { }
 
   getPost(id: string) {
     return this.httpClient.get<{message: string, post:any}>(BACKEND_URL + id);
@@ -28,6 +30,7 @@ export class PostsService {
         return postData.posts.map((post:any) => {
           return {
             title: post.title,
+            imgUrl: post.imgUrl ? post.imgUrl:'assets/img404.png',
             content: post.content.replace(/\n/g, "<br />"),
             id: post._id,
             creator: post.creator
@@ -35,7 +38,6 @@ export class PostsService {
         });
       }))
       .subscribe((transformedPost) => {
-        console.log(transformedPost);
         this.posts = transformedPost;
         this.postsSubs.next(this.posts.slice());
       })
@@ -46,6 +48,7 @@ export class PostsService {
       .pipe(map((postData)=> {
           return {
             title: postData.post.title,
+            imgUrl: postData.post.imgUrl,
             content: postData.post.content,
             id: postData.post._id,
             creator: postData.post.creator
@@ -58,8 +61,8 @@ export class PostsService {
       })
   }
 
-  updatePost(id: string, title: string, content: string, creator: string) {
-    const post: Post = {id: id, title:title, content: content, creator:creator};
+  updatePost(id: string, title: string, imgUrl:string, content: string, creator: string) {
+    const post: Post = {id: id, title:title, imgUrl:imgUrl, content: content, creator:creator};
     this.httpClient.put<{ message: string, post: any }>(BACKEND_URL + id, post)
       .subscribe((responseData) => {
         const updatedPosts = this.posts.slice();

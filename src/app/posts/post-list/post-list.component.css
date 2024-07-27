@@ -1,21 +1,17 @@
 :host {
   display: block;
-  height: 100%;
-  padding: 1rem 0 0;
-  padding-bottom: 1rem;
-  background-color: #000000;
-  background-image: linear-gradient(147deg, #000000 0%, #434343 74%);
+  padding: 1rem 0 1rem;
+  background-color: #f0f2f5;
 }
 .info-text {
   text-align: center;
 }
-
 mat-card {
   display: grid;
   grid-template-columns: 150px calc(100% - 150px);
   gap: 1rem;
   max-width: 850px;
-  margin: 0 auto 1rem;
+  margin: 0 auto auto;
   border-radius: 16px;
   
   img.blog-image {
@@ -65,12 +61,17 @@ mat-card {
     grid-template-columns: auto;
     gap: 0rem;
     padding: 1rem 0 1rem;
-    margin: 0 1rem 1.5rem;
+    margin: 0 1rem auto;
     
     img.blog-image {
       margin: auto !important;
       width: calc(100% - 2rem);
       height: auto !important;
+    }
+    img.not-found {
+      height: 100px !important;
+      object-fit: contain !important;
+      object-position: left;
     }
     mat-card-header {
       margin: 1rem 1rem 0;
@@ -84,4 +85,10 @@ mat-card {
   .break {
     display: inline-block;
   }
+  .mb-card {
+    margin-bottom: 1.5rem !important;
+  }
+}
+.mb-card {
+  margin-bottom: 1rem;
 }

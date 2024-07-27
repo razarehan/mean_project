@@ -14,9 +14,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.autoAuthUser();
-    this.navService.hasOpenSideNav.subscribe((data) => {
-      console.log("REHAN", data);
-      
+    this.navService.hasOpenSideNav.subscribe((data) => {      
       this.isSideNavVisiable = data;
     })
   }
