@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/singup", (req, res, next) => {
   bcrypt.hash(req.body.password, 8)
     .then((hash) => {
-      const user = new User({email: req.body.email, password: hash});
+      const user = new User({email: req.body.email, name: req.body.name, password: hash});
       user.save()
         .then(result => {
           res.status(201).json({
@@ -23,6 +23,19 @@ router.post("/singup", (req, res, next) => {
           })
         });
     })
+})
+
+router.get("/:id", async(req, res, next) => {
+  let fetchUser = await User.findOne({_id: req.params.id})
+  if(fetchUser) {
+    return res.status(200).json({
+      name: fetchUser.name
+    });
+  } else {
+    return res.status(200).json({
+      name: "Profile Deleted"
+    });
+  }
 })
 
 router.post("/login", async (req, res, next) => {

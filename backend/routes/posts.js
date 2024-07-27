@@ -9,6 +9,7 @@ router.post('', checkAuth, (req, res, next)=> {
   const post = new Post({
     title: req.body.title,
     content: req.body.content,
+    imgUrl: req.body.imgUrl,
     creator: req.userData.userId
   })
   post.save().then(createdPost=> {
@@ -68,6 +69,7 @@ router.put('/:id', checkAuth, (req, res, next) => {
       _id: req.body.id,
       title: req.body.title, 
       content: req.body.content,
+      imgUrl: req.body.imgUrl,
       creator: req.userData.userId
     });
   Post.updateOne({_id: req.params.id, creator: req.userData.userId }, post)
