@@ -50,14 +50,13 @@ router.post("/login", async (req, res, next) => {
   try {
     isPasswordMatched = await bcrypt.compare(req.body.password, fetchUser.password);
   } catch(err) {
-    console.log("password not matched!!!");
   }
   if(!isPasswordMatched) {
     return res.status(401).json ({
       message: 'Invalid authentication credentials!'
     });
   }
-  const ss_key = "";
+  const ss_key = process.env.SS_KEY;
   const token = jwt.sign({email: fetchUser.email, userId: fetchUser._id }, ss_key, { expiresIn: '1h' });
 
   return res.status(200).json({
