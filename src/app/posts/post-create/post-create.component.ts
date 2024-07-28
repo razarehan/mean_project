@@ -51,11 +51,14 @@ export class PostCreateComponent implements OnInit, OnDestroy {
         this.editedPostId = paramMap.get('postId');
         this.postsService.getPost(this.editedPostId).subscribe(postData => {
           // spinner stop 
+          console.log("REHAN", postData);
+          
         this.isLoading = false;
         this.post = { id: postData.post._id, title: postData.post.title, imgUrl: postData.post.imgUrl, content: postData.post.content };
         this.form.setValue({
           title: this.post.title,
-          content: this.post.content
+          content: this.post.content,
+          imgUrl: this.post.imgUrl
         })
         }) 
       }
