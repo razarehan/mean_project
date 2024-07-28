@@ -10,7 +10,8 @@ router.post('', checkAuth, (req, res, next)=> {
     title: req.body.title,
     content: req.body.content,
     imgUrl: req.body.imgUrl,
-    creator: req.userData.userId
+    creator: req.userData.userId,
+    createdAt: req.body.createdAt
   })
   post.save().then(createdPost=> {
     res.status(201).json({
@@ -70,7 +71,8 @@ router.put('/:id', checkAuth, (req, res, next) => {
       title: req.body.title, 
       content: req.body.content,
       imgUrl: req.body.imgUrl,
-      creator: req.userData.userId
+      creator: req.userData.userId,
+      createdAt: req.userData.createdAt
     });
   Post.updateOne({_id: req.params.id, creator: req.userData.userId }, post)
     .then((document) => {

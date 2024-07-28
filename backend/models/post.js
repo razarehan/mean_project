@@ -16,6 +16,10 @@ const postSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true
+  },
+  createdAt: {
+    type: String,
+    required: true
   }
 });
 

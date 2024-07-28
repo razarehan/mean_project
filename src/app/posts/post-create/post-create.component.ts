@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { DatePipe } from '@angular/common';
 
 import { Post } from '../post.model';
 import { PostsService } from '../posts.service';
@@ -10,7 +11,8 @@ import { PostsService } from '../posts.service';
 @Component({
   selector: 'app-post-create',
   templateUrl: './post-create.component.html',
-  styleUrls: ['./post-create.component.css']
+  styleUrls: ['./post-create.component.css'],
+  providers: [DatePipe]
 })
 export class PostCreateComponent implements OnInit, OnDestroy {
   private isCreateMode = true;
@@ -22,7 +24,8 @@ export class PostCreateComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   constructor(private postsService: PostsService, 
               private route: ActivatedRoute,
-              private authService:AuthService) { }
+              private authService:AuthService,
+              private datePipe: DatePipe) { }
 
   ngOnInit(): void {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe((authStatus)=>{
@@ -65,17 +68,21 @@ export class PostCreateComponent implements OnInit, OnDestroy {
 
 
   onSavePost() {
+    const now = new Date();
+    const date = this.datePipe.transform(now, 'd MMM yyyy') || '';
+    
     if(this.form.invalid)  return;
     this.isLoading = true;
     if(this.isCreateMode) {
       const post: Post = this.form.value;
-      this.postsService.addPosts({id: '', title: post.title, imgUrl: post.imgUrl, content: post.content, creator:this.userId});
+      this.postsService.addPosts({id: '', title: post.title, imgUrl: post.imgUrl, content: post.content, creator:this.userId, createdAt:date});
     }
     else {
-      this.postsService.updatePost(this.post.id, this.form.value.title, this.form.value.imgUrl, this.form.value.content, this.userId);
+      this.postsService.updatePost(this.post.id, this.form.value.title, this.form.value.imgUrl, this.form.value.content, this.userId, date);
     }
     this.form.reset();
   }
+
   ngOnDestroy(): void {
     this.authStatusSub.unsubscribe();
   }

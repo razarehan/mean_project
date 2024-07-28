@@ -36,9 +36,10 @@ export class PostViewComponent implements OnInit {
         return {
           id: postdata.post._id,
           title: postdata.post.title,
-          imgUrl: postdata.post.imgUrl,
+          imgUrl: postdata.post.imgUrl || 'assets/img404.png',
           content: postdata.post.content,
-          creator: postdata.post.creator
+          creator: postdata.post.creator,
+          createdAt: postdata.post.createdAt
         }
       }))
       .subscribe((transformedData) => {

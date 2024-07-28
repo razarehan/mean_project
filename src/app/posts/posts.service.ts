@@ -33,17 +33,22 @@ export class PostsService {
             imgUrl: post.imgUrl ? post.imgUrl:'assets/img404.png',
             content: post.content.replace(/\n/g, "<br />"),
             id: post._id,
-            creator: post.creator
+            creator: post.creator,
+            createdAt: post.createdAt
           }
         });
       }))
       .subscribe((transformedPost) => {
         this.posts = transformedPost;
         this.postsSubs.next(this.posts.slice());
+        console.log("rzzza", this.posts);
+        
       })
   }
 
   addPosts(post: Post) {
+    console.log("REHAN", post);
+    
     this.httpClient.post<{ message: string, post:any }>(BACKEND_URL, post)
       .pipe(map((postData)=> {
           return {
@@ -51,7 +56,8 @@ export class PostsService {
             imgUrl: postData.post.imgUrl,
             content: postData.post.content,
             id: postData.post._id,
-            creator: postData.post.creator
+            creator: postData.post.creator,
+            createdAt: postData.post.createdAt
           }
       }))
       .subscribe((transformedData) => {
@@ -61,8 +67,8 @@ export class PostsService {
       })
   }
 
-  updatePost(id: string, title: string, imgUrl:string, content: string, creator: string) {
-    const post: Post = {id: id, title:title, imgUrl:imgUrl, content: content, creator:creator};
+  updatePost(id: string, title: string, imgUrl:string, content: string, creator: string, createdAt: string) {
+    const post: Post = {id: id, title:title, imgUrl:imgUrl, content: content, creator:creator, createdAt:createdAt};
     this.httpClient.put<{ message: string, post: any }>(BACKEND_URL + id, post)
       .subscribe((responseData) => {
         const updatedPosts = this.posts.slice();

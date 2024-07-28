@@ -3,13 +3,13 @@
         <img class="back-btn" (click)="goBack()" src="/assets/arrow-back-outline.svg" alt="">
         <div class="back-container">
         </div>
-        <img class="blog-img" [ngClass]="{'no-img':!post.imgUrl}" [src]="post.imgUrl?post.imgUrl:'assets/img404.png'" alt="">
+        <img class="blog-img" [ngClass]="{'no-img':!post?.imgUrl}" [src]="post?.imgUrl" alt="">
         <div class="title">
-            <h3>{{post.title}}</h3>
+            <h3>{{post?.title}}</h3>
             <p>Written by: {{creator}}</p>
         </div>
     </div>
     <div class="content">
-        <p>{{post.content}}</p>
+        <p>{{post?.content}}</p>
     </div>
 </div>

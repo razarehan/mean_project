@@ -14,7 +14,7 @@
         <mat-card-subtitle>Written by : {{ creatorMap.get(post.creator) }}</mat-card-subtitle>
       </mat-card-header>
       <mat-action-row>
-        <p class="m-0 published">Published :<br *ngIf="isLoggedIn && userId === post.creator" class="break"/> 21 Jul 2024</p>
+        <p class="m-0 published">Published :<br *ngIf="isLoggedIn && userId === post.creator" class="break"/> {{ post.createdAt }}</p>
         <a *ngIf="isLoggedIn && userId === post.creator" mat-button [routerLink]="['/edit', post.id]" color="accent">Edit</a>
         <button *ngIf="isLoggedIn && userId === post.creator" mat-button color="warn" (click)="onDeletePost(post.id)">Delete</button>
       </mat-action-row>
