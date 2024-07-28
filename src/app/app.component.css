@@ -1,7 +1,8 @@
 main {
   margin: auto;
   max-width: 800px;
-  height: calc(100% - 56px);
+  height: 100%;
+  overflow-y: auto;
 }
 
 /* Media query for mobile devices */

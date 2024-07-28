@@ -13,6 +13,7 @@
         position: sticky;
         top: 0;
         min-height: fit-content;
+        max-height: 60%;
         .back-container {
             position: absolute;
             top: 0;
@@ -34,7 +35,8 @@
         }
         img.blog-img {
             width: 100%;
-            height: auto;
+            height: calc(100% - 30px);
+            object-fit: contain;
         }
         .title {
             position: absolute;

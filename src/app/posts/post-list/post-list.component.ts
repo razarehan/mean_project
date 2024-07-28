@@ -17,7 +17,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   postsPerPage = 3;
   posts: Post[] = [];
   isLoggedIn = false;
-  userId:string | undefined;
+  userId:string = '';
   creatorMap = new Map();
 
   private postsSubscription = new Subscription();
@@ -29,6 +29,7 @@ export class PostListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
+    this.authService.autoAuthUser();
     this.userId = this.authService.getUserId();
     this.postsService.getPosts();
     this.postsSubscription = this.postsService.postsSubs

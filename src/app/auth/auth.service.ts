@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthData } from './auth-data.model';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -27,7 +26,7 @@ export class AuthService {
   }
   
   getUserId() {
-    return this.userId;
+    return this.userId || '';
   }
   
   getUserameById(id:string) {
@@ -116,7 +115,7 @@ export class AuthService {
   private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
-    const userId = localStorage.getItem('userId');
+    const userId = this.userId = localStorage.getItem('userId') || '';
     if(!token || !expirationDate) {
       return;
     }
